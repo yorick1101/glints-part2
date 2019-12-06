@@ -1,0 +1,15 @@
+Number of funds
+
+db.getCollection("companies").aggregate([
+{
+    $project:{
+       "name" : 1,
+       "count":{
+           "$size": { "$ifNull": [ "$fundingrounds", []]}
+       }     
+    }
+},{
+    $match:{
+        count: { "$gt" : 0}   
+    }
+}])
