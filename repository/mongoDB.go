@@ -52,36 +52,36 @@ func (op *MongoCollectionOP) UpsertOne(filter interface{}, update interface{}) i
 	return res.UpsertedID
 }
 
-func (op *MongoCollectionOP) FindIdByAggregate(pipeline mongo.Pipeline) []string {
+func (op *MongoCollectionOP) FindIdByAggregate(pipeline mongo.Pipeline) ([]string, error) {
 	opts := options.Aggregate().SetMaxTime(2 * time.Second)
+	var ids []string
 	cursor, err := op.collection.Aggregate(context.TODO(), pipeline, opts)
 	if err != nil {
-		log.Panic(err)
+		return ids, err
 	}
 
 	var results []bson.M
 	if err = cursor.All(context.TODO(), &results); err != nil {
-		log.Fatal(err)
+		return ids, err
 	}
 
-	var ids []string
 	for _, result := range results {
 		ids = append(ids, fmt.Sprintf("%v", result["_id"]))
 	}
-	return ids
+	return ids, nil
 }
 
-func (op *MongoCollectionOP) Find(filter interface{}, results interface{}) {
+func (op *MongoCollectionOP) Find(filter interface{}, results interface{}) error {
 	opts := options.Find()
 	cursor, err := op.collection.Find(context.TODO(), filter, opts)
 	defer cursor.Close(context.TODO())
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 	if err = cursor.All(context.TODO(), results); err != nil {
-		log.Fatal(err)
+		return err
 	}
-
+	return nil
 }
 
 func (op *MongoCollectionOP) FindWithOptions(filter interface{}, results interface{}, options *options.FindOptions) {
@@ -96,6 +96,18 @@ func (op *MongoCollectionOP) FindWithOptions(filter interface{}, results interfa
 		log.Fatal(err)
 	}
 
+}
+
+func (op *MongoCollectionOP) Replace(id string, update interface{}) (int64, error) {
+
+	opts := options.Replace().SetUpsert(false)
+	filter := bson.D{{"_id", id}}
+	res, err := op.collection.ReplaceOne(context.TODO(), filter, update, opts)
+	if err != nil {
+		return 0, err
+	}
+
+	return res.MatchedCount, nil
 }
 
 func newMongoDBOP(username string, password string, host string, port int, databaseName string) *MongoDBOP {

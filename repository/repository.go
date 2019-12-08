@@ -18,11 +18,6 @@ type IdContainer struct {
 	Id string `bson:"_id"`
 }
 
-type IdRelationship struct {
-	Id           string                   `bson:"_id"`
-	Relationship []model.BsonRelationship `bson:"relationships"`
-}
-
 func (repo *Repository) ImportComanies(companies []model.Company) {
 
 	companyCollection := repo.db.GetCollection("companies")
@@ -114,7 +109,7 @@ func (repo *Repository) ImportComanies(companies []model.Company) {
 	log.Info("inserted company:", len(ids))
 }
 
-func (repo *Repository) FilterByNumberOfFundingRounds(criterias []model.IntFilter) []string {
+func (repo *Repository) FilterByNumberOfFundingRounds(criterias []model.IntFilter) ([]string, error) {
 	companyCollection := repo.db.GetCollection("companies")
 
 	var criteriaD bson.D
@@ -134,7 +129,7 @@ func (repo *Repository) FilterByNumberOfFundingRounds(criterias []model.IntFilte
 	return companyCollection.FindIdByAggregate(pipeline)
 }
 
-func (repo *Repository) FilterByAmountOfFundingRounds(criterias []model.IntFilter) []string {
+func (repo *Repository) FilterByAmountOfFundingRounds(criterias []model.IntFilter) ([]string, error) {
 	companyCollection := repo.db.GetCollection("companies")
 
 	var criteriaD bson.D
@@ -194,7 +189,7 @@ func (repo *Repository) FindPersonOnRelationship(ispast bool, personId string) [
 	//projection = append(projection, bson.E{"relationships.$", 1})
 	opt := options.Find().SetProjection(projection)
 
-	var containers []IdRelationship
+	var containers []IdContainer
 	collection.FindWithOptions(criteria, &containers, opt)
 
 	var ids []string
@@ -260,14 +255,22 @@ func (repo *Repository) FindCompanyOnAcquisitions(compaynId string) []string {
 	return ids
 }
 
-func (repo *Repository) FindCompanyByIds(ids ...string) []model.BsonCompany {
+func (repo *Repository) FindCompanyByIds(ids []string) ([]model.BsonCompany, error) {
 	companyCollection := repo.db.GetCollection("companies")
 	var criteriaD bson.D
 	criteriaD = append(criteriaD, bson.E{"_id", bson.D{{"$in", ids}}})
 
 	var companies []model.BsonCompany
-	companyCollection.Find(criteriaD, &companies)
-	return companies
+	err := companyCollection.Find(criteriaD, &companies)
+	if err != nil {
+		return companies, err
+	}
+	return companies, nil
+}
+
+func (repo *Repository) ReplaceCompany(company *model.BsonCompany) (int64, error) {
+	companyCollection := repo.db.GetCollection("companies")
+	return companyCollection.Replace(company.Id, company)
 }
 
 func newRepository(db DBOP) *Repository {

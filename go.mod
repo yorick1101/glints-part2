@@ -6,6 +6,7 @@ require github.com/sirupsen/logrus v1.4.2
 
 require (
 	github.com/elastic/go-elasticsearch/v7 v7.5.0
+	github.com/gin-gonic/gin v1.5.0
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
