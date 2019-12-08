@@ -71,24 +71,35 @@ func (op *MongoCollectionOP) FindIdByAggregate(pipeline mongo.Pipeline) []string
 	return ids
 }
 
-func (op *MongoCollectionOP) Find(filter interface{}) []interface{} {
+func (op *MongoCollectionOP) Find(filter interface{}, results interface{}) {
 	opts := options.Find()
 	cursor, err := op.collection.Find(context.TODO(), filter, opts)
+	defer cursor.Close(context.TODO())
 	if err != nil {
 		log.Fatal(err)
 	}
-	var results []bson.M
-	if err = cursor.All(context.TODO(), &results); err != nil {
+	if err = cursor.All(context.TODO(), results); err != nil {
 		log.Fatal(err)
 	}
-	for _, result := range results {
-		fmt.Println(result)
+
+}
+
+func (op *MongoCollectionOP) FindWithOptions(filter interface{}, results interface{}, options *options.FindOptions) {
+
+	cursor, err := op.collection.Find(context.TODO(), filter, options)
+	defer cursor.Close(context.TODO())
+	if err != nil {
+		log.Fatal(err)
 	}
-	return nil
+
+	if err = cursor.All(context.TODO(), results); err != nil {
+		log.Fatal(err)
+	}
+
 }
 
 func newMongoDBOP(username string, password string, host string, port int, databaseName string) *MongoDBOP {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.TODO(), 10*time.Second)
 	defer cancel()
 	credential := options.Credential{
 		Username: username,

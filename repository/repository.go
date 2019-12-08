@@ -1,17 +1,26 @@
 package repository
 
 import (
-	"fmt"
 	"glints-part2/model"
 
 	log "github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Repository struct {
 	db DBOP
+}
+
+type IdContainer struct {
+	Id string `bson:"_id"`
+}
+
+type IdRelationship struct {
+	Id           string                   `bson:"_id"`
+	Relationship []model.BsonRelationship `bson:"relationships"`
 }
 
 func (repo *Repository) ImportComanies(companies []model.Company) {
@@ -125,12 +134,140 @@ func (repo *Repository) FilterByNumberOfFundingRounds(criterias []model.IntFilte
 	return companyCollection.FindIdByAggregate(pipeline)
 }
 
-func (repo *Repository) FindCompanyById(ids ...string) []interface{} {
+func (repo *Repository) FilterByAmountOfFundingRounds(criterias []model.IntFilter) []string {
+	companyCollection := repo.db.GetCollection("companies")
+
+	var criteriaD bson.D
+	for _, criteria := range criterias {
+		var op = "$" + criteria.Operation
+		criteriaD = append(criteriaD, bson.E{op, criteria.Value})
+	}
+
+	pipeline := mongo.Pipeline{
+		{{"$project", bson.D{
+			{"_id", 1},
+			{"count", bson.D{{"$sum", "$fundingRounds.raisedAmount"}}},
+		}}},
+
+		{{"$match", bson.D{{"count", criteriaD}}}},
+	}
+	return companyCollection.FindIdByAggregate(pipeline)
+}
+
+func filterByDate(repo *Repository, field string, criterias []model.DateFilter) []string {
+	companyCollection := repo.db.GetCollection("companies")
+
+	var criteriaD bson.D
+	for _, criteria := range criterias {
+		var op = "$" + criteria.Operation
+		criteriaD = append(criteriaD, bson.E{op, criteria.Value})
+	}
+
+	criteria := bson.D{{"foundedDate", criteriaD}}
+
+	projection := bson.D{{"_id", 1}}
+	opt := options.Find().SetProjection(projection)
+
+	var companyIds []IdContainer
+	var results []string
+	companyCollection.FindWithOptions(criteria, &companyIds, opt)
+	for _, companyId := range companyIds {
+		results = append(results, companyId.Id)
+	}
+	return results
+}
+
+func (repo *Repository) FilterByFundingDate(criterias []model.DateFilter) []string {
+	return filterByDate(repo, "foundedDate", criterias)
+}
+
+func (repo *Repository) FilterByDeadedpoolDate(criterias []model.DateFilter) []string {
+	return filterByDate(repo, "deadpooledDate", criterias)
+}
+
+func (repo *Repository) FindPersonOnRelationship(ispast bool, personId string) []string {
+	collection := repo.db.GetCollection("companies")
+
+	criteria := bson.D{{"relationships", bson.D{{"$elemMatch", bson.D{{"personId", personId}, {"isPast", ispast}}}}}}
+	var projection bson.D
+	projection = append(projection, bson.E{"_id", 1})
+	//projection = append(projection, bson.E{"relationships.$", 1})
+	opt := options.Find().SetProjection(projection)
+
+	var containers []IdRelationship
+	collection.FindWithOptions(criteria, &containers, opt)
+
+	var ids []string
+	for _, result := range containers {
+		ids = append(ids, result.Id)
+	}
+
+	return ids
+}
+
+func (repo *Repository) FindPersonOnFundingRounds(personId string) []string {
+	collection := repo.db.GetCollection("companies")
+	criteria := bson.D{{"fundingRounds.investments.personId", personId}}
+
+	projection := bson.D{{"_id", 1}, {"fundingRounds.$", 1}}
+	opt := options.Find().SetProjection(projection)
+
+	var containers []IdContainer
+	collection.FindWithOptions(criteria, &containers, opt)
+
+	var ids []string
+	for _, result := range containers {
+		ids = append(ids, result.Id)
+	}
+	return ids
+}
+
+func (repo *Repository) FindCompanyOnFundingRounds(compaynId string) []string {
+	collection := repo.db.GetCollection("companies")
+	criteria := bson.D{{"fundingRounds.investments.companyId", compaynId}}
+
+	//projection := bson.D{{"_id", 1}, {"fundingRounds.$", 1}}
+	projection := bson.D{{"_id", 1}}
+	opt := options.Find().SetProjection(projection)
+
+	var containers []IdContainer
+	collection.FindWithOptions(criteria, &containers, opt)
+
+	var ids []string
+	for _, result := range containers {
+		ids = append(ids, result.Id)
+	}
+	return ids
+}
+
+func (repo *Repository) FindCompanyOnAcquisitions(compaynId string) []string {
+	collection := repo.db.GetCollection("companies")
+	criteria := bson.D{{"$or", []interface{}{
+		bson.D{{"acquisitions.acquiringCompanyId", compaynId}},
+		bson.D{{"acquisition.acquiringCompanyId", compaynId}},
+	}}}
+
+	projection := bson.D{{"_id", 1}}
+	opt := options.Find().SetProjection(projection)
+
+	var containers []IdContainer
+	collection.FindWithOptions(criteria, &containers, opt)
+
+	var ids []string
+	for _, result := range containers {
+		ids = append(ids, result.Id)
+	}
+	return ids
+}
+
+func (repo *Repository) FindCompanyByIds(ids ...string) []model.BsonCompany {
 	companyCollection := repo.db.GetCollection("companies")
 	var criteriaD bson.D
 	criteriaD = append(criteriaD, bson.E{"_id", bson.D{{"$in", ids}}})
-	fmt.Println(criteriaD)
-	return companyCollection.Find(criteriaD)
+
+	var companies []model.BsonCompany
+	companyCollection.Find(criteriaD, &companies)
+	return companies
 }
 
 func newRepository(db DBOP) *Repository {

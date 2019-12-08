@@ -152,7 +152,7 @@ func (source *Acquisition) toSchema() *BsonAcquisition {
 		TermCode:          source.TermCode,
 		SourceUrl:         source.SourceUrl,
 		SourceDescription: source.SourceDescription,
-		AcquiredDate:      time.Date(source.AcquiredYear, time.Month(source.AcquiredMonth), source.AcquiredDay, 0, 0, 0, 0, time.UTC),
+		AcquiredDate:      toTime(source.AcquiredYear, source.AcquiredMonth, source.AcquiredDay),
 		AcquiringCompany:  source.AcquiringCompany,
 	}
 
@@ -165,7 +165,7 @@ func (source *Acquisition2) toSchema() BsonAcquisition {
 		TermCode:          source.TermCode,
 		SourceUrl:         source.SourceUrl,
 		SourceDescription: source.SourceDescription,
-		AcquiredDate:      time.Date(source.AcquiredYear, time.Month(source.AcquiredMonth), source.AcquiredDay, 0, 0, 0, 0, time.UTC),
+		AcquiredDate:      toTime(source.AcquiredYear, source.AcquiredMonth, source.AcquiredDay),
 		AcquiringCompany:  source.AcquiringCompany,
 	}
 
