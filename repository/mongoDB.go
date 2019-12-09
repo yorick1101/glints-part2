@@ -60,17 +60,18 @@ func (op *MongoCollectionOP) FindIdByAggregate(pipeline mongo.Pipeline) ([]strin
 		return ids, err
 	}
 
-	var results []bson.M
+	var results []IdContainer
 	if err = cursor.All(context.TODO(), &results); err != nil {
 		return ids, err
 	}
 
 	for _, result := range results {
-		ids = append(ids, fmt.Sprintf("%v", result["_id"]))
+		ids = append(ids, result.Id.Hex())
 	}
 	return ids, nil
 }
 
+//results must be pointer to array
 func (op *MongoCollectionOP) Find(filter interface{}, results interface{}) error {
 	opts := options.Find()
 	cursor, err := op.collection.Find(context.TODO(), filter, opts)
@@ -84,18 +85,33 @@ func (op *MongoCollectionOP) Find(filter interface{}, results interface{}) error
 	return nil
 }
 
-func (op *MongoCollectionOP) FindWithOptions(filter interface{}, results interface{}, options *options.FindOptions) {
+func (op *MongoCollectionOP) FindOne(filter interface{}, result interface{}) error {
+	opts := options.FindOne()
+
+	singleResult := op.collection.FindOne(context.TODO(), filter, opts)
+	err := singleResult.Err()
+	if err != nil {
+		return err
+	}
+	err = singleResult.Decode(result)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (op *MongoCollectionOP) FindWithOptions(filter interface{}, results interface{}, options *options.FindOptions) error {
 
 	cursor, err := op.collection.Find(context.TODO(), filter, options)
 	defer cursor.Close(context.TODO())
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	if err = cursor.All(context.TODO(), results); err != nil {
-		log.Fatal(err)
+		return err
 	}
-
+	return nil
 }
 
 func (op *MongoCollectionOP) Replace(id string, update interface{}) (int64, error) {

@@ -2,10 +2,12 @@ package model
 
 import (
 	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type BsonCompany struct {
-	Id                string              `bson:"_id" json:"id"`
+	Id                primitive.ObjectID  `bson:"_id" json:"-"`
 	Name              string              `bson:"name" json:"name"`
 	Permalink         string              `bson:"permalink" json:"permalink"`
 	CrunchbaseUrl     string              `bson:"crunchbaseUrl" json:"crunchbase_url"`

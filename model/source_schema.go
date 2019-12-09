@@ -1,6 +1,11 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	log "github.com/sirupsen/logrus"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 type OID struct {
 	Id string `json:"$oid"`
@@ -96,8 +101,13 @@ type PermanentLink struct {
 
 func (source *Company) ToSchema() *BsonCompany {
 
+	companyId, err := primitive.ObjectIDFromHex(source.Id.Id)
+	if err != nil {
+		log.Panic(err)
+	}
+
 	company := &BsonCompany{
-		Id:                source.Id.Id,
+		Id:                companyId,
 		Name:              source.Name,
 		Permalink:         source.Permalink,
 		CrunchbaseUrl:     source.CrunchbaseUrl,

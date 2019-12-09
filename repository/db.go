@@ -15,7 +15,8 @@ type CollectionOP interface {
 	UpsertOne(filter interface{}, update interface{}) interface{}
 	FindIdByAggregate(pipeline mongo.Pipeline) ([]string, error)
 	Find(filter interface{}, results interface{}) error
-	FindWithOptions(filter interface{}, results interface{}, options *options.FindOptions)
+	FindOne(filter interface{}, results interface{}) error
+	FindWithOptions(filter interface{}, results interface{}, options *options.FindOptions) error
 	Replace(id string, update interface{}) (int64, error)
 }
 

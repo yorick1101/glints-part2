@@ -9,5 +9,5 @@ type IntFilter struct {
 
 type DateFilter struct {
 	Operation string //eq, lt, gt
-	Value     time.Time
+	Value     *time.Time
 }

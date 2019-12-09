@@ -34,24 +34,24 @@ func InitRouters() *gin.Engine {
 		companyFunding.GET("/date", hadler.fundingDateHandler)
 	}
 
-	router.GET("/company/search/deadpool", hadler.deadpoolHandler)
+	router.GET("/company/search/deadpool/date", hadler.deadpoolHandler)
 
 	companyPerson := router.Group("/company/search/person")
 	{
-		companyPerson.GET("/invested", hadler.personInvestedHandler)
-		companyPerson.GET("/employed", hadler.personEmployedtHandler)
+		companyPerson.GET("/invested/:personId", hadler.personInvestedHandler)
+		companyPerson.GET("/employed/:personId", hadler.personEmployedtHandler)
 	}
 
 	companyOther := router.Group("/company/search/other")
 	{
-		companyOther.GET("/acquisition", hadler.otherAcquisitiondHandler)
-		companyOther.GET("/invested", hadler.otherInvesteddHandler)
+		companyOther.GET("/acquisition/:companyId", hadler.otherAcquisitiondHandler)
+		companyOther.GET("/invested/:companyId", hadler.otherInvesteddHandler)
 	}
 
 	person := router.Group("/person")
 	{
-		person.GET("/permalink", hadler.getPersonByPermalinkHandler)
-		person.GET("/", hadler.getPersonHandler)
+		person.GET("/permalink/:permalink", hadler.getPersonByPermalinkHandler)
+		person.GET("/id/:personId", hadler.getPersonHandler)
 	}
 
 	return router

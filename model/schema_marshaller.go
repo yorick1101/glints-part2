@@ -3,6 +3,8 @@ package model
 import (
 	"encoding/json"
 	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 var DATE_FORMAT string = "2006-01-02"
@@ -10,11 +12,12 @@ var DATE_FORMAT string = "2006-01-02"
 type AliasBsonCompany BsonCompany
 type JSONBsonCompany struct {
 	AliasBsonCompany
+	Id             string `json:"id"`
 	FoundedDate    string `json:"foundedDate"`
 	DeadpooledDate string `json:"deadpooledDate"`
 }
 
-func parseDateStr(str string) (*time.Time, error) {
+func ParseDateStr(str string) (*time.Time, error) {
 	var date *time.Time = nil
 	if len(str) != 0 {
 		t, err := time.Parse(DATE_FORMAT, str)
@@ -26,7 +29,7 @@ func parseDateStr(str string) (*time.Time, error) {
 	return date, nil
 }
 
-func (this BsonCompany) MArshalJSON() ([]byte, error) {
+func (this BsonCompany) MarshalJSON() ([]byte, error) {
 
 	var fundedDate = ""
 	if this.FoundedDate != nil {
@@ -39,6 +42,7 @@ func (this BsonCompany) MArshalJSON() ([]byte, error) {
 
 	tmpCompany := JSONBsonCompany{
 		AliasBsonCompany: (AliasBsonCompany)(this),
+		Id:               this.Id.Hex(),
 		FoundedDate:      fundedDate,
 		DeadpooledDate:   deadpooledDate,
 	}
@@ -52,12 +56,12 @@ func (this *BsonCompany) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	fundedDate, err := parseDateStr(jcompany.FoundedDate)
+	fundedDate, err := ParseDateStr(jcompany.FoundedDate)
 	if err != nil {
 		return err
 	}
 
-	deadpooledDate, err := parseDateStr(jcompany.DeadpooledDate)
+	deadpooledDate, err := ParseDateStr(jcompany.DeadpooledDate)
 	if err != nil {
 		return err
 	}
@@ -65,6 +69,11 @@ func (this *BsonCompany) UnmarshalJSON(b []byte) error {
 	company := BsonCompany(jcompany.AliasBsonCompany)
 	company.FoundedDate = fundedDate
 	company.DeadpooledDate = deadpooledDate
+	id, err := primitive.ObjectIDFromHex(jcompany.Id)
+	if err != nil {
+		return err
+	}
+	company.Id = id
 
 	this = &company
 	return nil
@@ -76,7 +85,7 @@ type JSONAcquisition struct {
 	AcquiredDate string `json:"acquiredDate"`
 }
 
-func (this BsonAcquisition) MArshalJSON() ([]byte, error) {
+func (this BsonAcquisition) MarshalJSON() ([]byte, error) {
 
 	var acquiredDate = ""
 	if this.AcquiredDate != nil {
@@ -97,7 +106,7 @@ func (this *BsonAcquisition) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	acquiredDate, err := parseDateStr(jacquisition.AcquiredDate)
+	acquiredDate, err := ParseDateStr(jacquisition.AcquiredDate)
 	if err != nil {
 		return err
 	}
@@ -115,7 +124,7 @@ type JSONFundingRound struct {
 	FundedDate string `json:"fundedDate"`
 }
 
-func (this BsonFundingRound) MArshalJSON() ([]byte, error) {
+func (this BsonFundingRound) MarshalJSON() ([]byte, error) {
 
 	var fundedDate = ""
 	if this.FundedDate != nil {
@@ -136,7 +145,7 @@ func (this *BsonFundingRound) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	fundedDate, err := parseDateStr(jfundingRound.FundedDate)
+	fundedDate, err := ParseDateStr(jfundingRound.FundedDate)
 	if err != nil {
 		return err
 	}
