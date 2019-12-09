@@ -29,7 +29,6 @@ func response(c *gin.Context, httpStatus int, message interface{}) {
 	})
 }
 
-//getComapnyHandler
 func (handler *RequestHandler) getCompanyHandler(c *gin.Context) {
 	companyIds := c.QueryArray("id")
 	if len(companyIds) == 0 {
@@ -50,7 +49,11 @@ func (handler *RequestHandler) getCompanyHandler(c *gin.Context) {
 //updateCompanyHandler
 func (handler *RequestHandler) updateCompanyHandler(c *gin.Context) {
 	var company model.BsonCompany
-	c.BindJSON(&company)
+	err := c.BindJSON(&company)
+	if err != nil {
+		response(c, http.StatusBadRequest, err.Error())
+		return
+	}
 	count, err := handler.repo.ReplaceCompany(&company)
 	if err != nil {
 		response(c, http.StatusInternalServerError, err.Error())

@@ -188,14 +188,11 @@ func (repo *Repository) FilterByDeadedpoolDate(criterias []model.DateFilter) ([]
 	return filterByDate(repo, "deadpooledDate", criterias)
 }
 
-func (repo *Repository) FindPersonOnRelationship(personId string) ([]string, error) {
+func findCompanyIdByCriteria(repo *Repository, criteria bson.D) ([]string, error) {
 	collection := repo.db.GetCollection(COMPANY_COLLECTION)
-
-	//criteria := bson.D{{"relationships", bson.D{{"$elemMatch", bson.D{{"personId", personId}, {"isPast", ispast}}}}}}
-	criteria := bson.D{{"relationships", bson.D{{"$elemMatch", bson.D{{"personId", personId}}}}}}
 	var projection bson.D
 	projection = append(projection, bson.E{"_id", 1})
-	//projection = append(projection, bson.E{"relationships.$", 1})
+
 	opt := options.Find().SetProjection(projection)
 
 	var containers []IdContainer
@@ -210,70 +207,37 @@ func (repo *Repository) FindPersonOnRelationship(personId string) ([]string, err
 	}
 
 	return ids, nil
+}
+
+func (repo *Repository) FindPersonOnRelationship(personId string) ([]string, error) {
+
+	//criteria := bson.D{{"relationships", bson.D{{"$elemMatch", bson.D{{"personId", personId}, {"isPast", ispast}}}}}}
+	//projection = append(projection, bson.E{"relationships.$", 1})
+	criteria := bson.D{{"relationships", bson.D{{"$elemMatch", bson.D{{"personId", personId}}}}}}
+	return findCompanyIdByCriteria(repo, criteria)
 }
 
 func (repo *Repository) FindPersonOnFundingRounds(personId string) ([]string, error) {
-	collection := repo.db.GetCollection(COMPANY_COLLECTION)
 	criteria := bson.D{{"fundingRounds.investments.personId", personId}}
 
-	projection := bson.D{{"_id", 1}, {"fundingRounds.$", 1}}
-	opt := options.Find().SetProjection(projection)
-
-	var containers []IdContainer
-	var ids []string
-	err := collection.FindWithOptions(criteria, &containers, opt)
-	if err != nil {
-		return ids, err
-	}
-
-	for _, result := range containers {
-		ids = append(ids, result.Id.Hex())
-	}
-	return ids, nil
+	//projection := bson.D{{"_id", 1}, {"fundingRounds.$", 1}}
+	return findCompanyIdByCriteria(repo, criteria)
 }
 
 func (repo *Repository) FindCompanyOnFundingRounds(compaynId string) ([]string, error) {
-	collection := repo.db.GetCollection(COMPANY_COLLECTION)
 	criteria := bson.D{{"fundingRounds.investments.companyId", compaynId}}
 
 	//projection := bson.D{{"_id", 1}, {"fundingRounds.$", 1}}
-	projection := bson.D{{"_id", 1}}
-	opt := options.Find().SetProjection(projection)
-
-	var containers []IdContainer
-	var ids []string
-	err := collection.FindWithOptions(criteria, &containers, opt)
-	if err != nil {
-		return ids, err
-	}
-
-	for _, result := range containers {
-		ids = append(ids, result.Id.Hex())
-	}
-	return ids, nil
+	return findCompanyIdByCriteria(repo, criteria)
 }
 
 func (repo *Repository) FindCompanyOnAcquisitions(compaynId string) ([]string, error) {
-	collection := repo.db.GetCollection(COMPANY_COLLECTION)
 	criteria := bson.D{{"$or", []interface{}{
 		bson.D{{"acquisitions.acquiringCompanyId", compaynId}},
 		bson.D{{"acquisition.acquiringCompanyId", compaynId}},
 	}}}
 
-	projection := bson.D{{"_id", 1}}
-	opt := options.Find().SetProjection(projection)
-
-	var containers []IdContainer
-	var ids []string
-	err := collection.FindWithOptions(criteria, &containers, opt)
-	if err != nil {
-		return ids, err
-	}
-
-	for _, result := range containers {
-		ids = append(ids, result.Id.Hex())
-	}
-	return ids, nil
+	return findCompanyIdByCriteria(repo, criteria)
 }
 
 func (repo *Repository) FindCompanyByIds(companyIds []string) ([]model.BsonCompany, error) {

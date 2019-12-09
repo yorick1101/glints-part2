@@ -1,0 +1,636 @@
+openapi: 3.0.0
+
+info:
+    title: API for Glints-Part2
+    description: API description
+    version: 1.0.0
+
+servers:
+    - url: http://localhost
+
+paths:
+    /company:
+      get:
+        summary: get company documents
+        description: > 
+          Return an array of company documents for the specified ids. Ex:<br/>
+          <b>/company?id=52cdef7c4bab8bd675297d8a, 52cdef7c4bab8bd675297d8a</b>
+        tags: 
+          - comapny
+        parameters:
+           - in: query
+             name: id
+             required: true
+             schema:
+              type: string
+             style: form
+             explode: false
+             
+        responses:
+        
+          200:
+            description: OK
+            content:
+              application/json:
+                schema: 
+                  properties: 
+                    code:
+                      type: integer
+                      description: http status code
+                      format: int32
+                      example: 200
+                    message:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/CompanyResponse'
+          400:
+            $ref: '#/components/responses/400'
+          404:
+            $ref: '#/components/responses/404'
+          500:
+            $ref: '#/components/responses/500'
+            
+            
+      post:
+        summary: update a company document
+        description: > 
+          Update a company document by object in the body
+        tags: 
+          - comapny
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyResponse'
+        responses:
+          200:
+            $ref: '#/components/responses/200'
+          400:
+            $ref: '#/components/responses/400'
+          404:
+            $ref: '#/components/responses/404'
+          500:
+            $ref: '#/components/responses/500'
+    
+    /company/search/funding/rounds:
+      get:
+        summary: get company ids filtered by funding rounds
+        description: get company ids filtered by funding rounds, <br/><b> Note:At least one query parameter must be specified</b>
+        tags: 
+          - company-search
+        parameters:
+          - $ref: '#/components/parameters/lt-number'
+          - $ref: '#/components/parameters/gt-number'
+          - $ref: '#/components/parameters/eq-number'
+        responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                schema: 
+                  properties: 
+                    code:
+                      type: integer
+                      description: http status code
+                      format: int32
+                      example: 200
+                    message:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/CompanyIdResponse'
+          400:
+            $ref: '#/components/responses/400'
+          500:
+            $ref: '#/components/responses/500'
+            
+    /company/search/funding/amount:
+      get:
+        summary: get company ids filtered by raising amount
+        description: get company ids filtered by raising amount<br/><b> Note:At least one query parameter must be specified</b>
+        tags: 
+          - company-search
+        parameters:
+          - $ref: '#/components/parameters/lt-number'
+          - $ref: '#/components/parameters/gt-number'
+          - $ref: '#/components/parameters/eq-number'
+        responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                schema: 
+                  properties: 
+                    code:
+                      type: integer
+                      description: http status code
+                      format: int32
+                      example: 200
+                    message:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/CompanyIdResponse'
+          400:
+            $ref: '#/components/responses/400'
+          500:
+            $ref: '#/components/responses/500'
+    /company/search/funding/date:
+      get:
+        summary: get company ids filtered by funding date
+        description: get company ids filtered by funding date<br/><b> Note:At least one query parameter must be specified</b>
+        tags: 
+          - company-search
+        parameters:
+          - $ref: '#/components/parameters/lt-date'
+          - $ref: '#/components/parameters/gt-date'
+          - $ref: '#/components/parameters/eq-date'
+        responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                schema: 
+                  properties: 
+                    code:
+                      type: integer
+                      description: http status code
+                      format: int32
+                      example: 200
+                    message:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/CompanyIdResponse'
+          400:
+            $ref: '#/components/responses/400'
+          500:
+            $ref: '#/components/responses/500'
+    /company/search/deadpool/date:
+      get:
+        summary: get company ids filtered by deadpooled date
+        description: get company ids filtered by deadpooled date<br/><b> Note:At least one query parameter must be specified</b>
+        tags: 
+          - company-search
+        parameters:
+          - $ref: '#/components/parameters/lt-date'
+          - $ref: '#/components/parameters/gt-date'
+          - $ref: '#/components/parameters/eq-date'
+        responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                schema: 
+                  properties: 
+                    code:
+                      type: integer
+                      description: http status code
+                      format: int32
+                      example: 200
+                    message:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/CompanyIdResponse'
+          400:
+            $ref: '#/components/responses/400'
+          500:
+            $ref: '#/components/responses/500'
+    /company/search/person/invested:
+      get:
+        summary: get company ids which is invested by the specified person id
+        description: get company ids which is invested by the specified person id
+        tags: 
+          - relationship
+        parameters:
+          - in: path
+            name: personId   # Note the name is the same as in the path
+            required: true
+            schema:
+              type: string
+              description: The person id
+        responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                schema: 
+                  properties: 
+                    code:
+                      type: integer
+                      description: http status code
+                      format: int32
+                      example: 200
+                    message:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/CompanyIdResponse'
+          400:
+            $ref: '#/components/responses/400'
+          404:
+            $ref: '#/components/responses/404'
+          500:
+            $ref: '#/components/responses/500'
+    /company/search/person/employed:
+      get:
+        summary: get company ids which the specified person id ever employed by
+        description: get company ids which the specified person id ever employed by
+        tags: 
+          - relationship
+        parameters:
+          - in: path
+            name: personId   # Note the name is the same as in the path
+            required: true
+            schema:
+              type: string
+              description: The person id
+        responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                schema: 
+                  properties: 
+                    code:
+                      type: integer
+                      description: http status code
+                      format: int32
+                      example: 200
+                    message:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/CompanyIdResponse'
+          400:
+            $ref: '#/components/responses/400'
+          404:
+            $ref: '#/components/responses/404'
+          500:
+            $ref: '#/components/responses/500'   
+    /company/search/other/acquisition:
+      get:
+        summary: get company ids which are ever acquired by the specified company id 
+        description: get company ids which are ever acquired by the specified company id
+        tags: 
+          - relationship
+        parameters:
+          - in: path
+            name: companyId   # Note the name is the same as in the path
+            required: true
+            schema:
+              type: string
+              description: The company id
+        responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                schema: 
+                  properties: 
+                    code:
+                      type: integer
+                      description: http status code
+                      format: int32
+                      example: 200
+                    message:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/CompanyIdResponse'
+          400:
+            $ref: '#/components/responses/400'
+          404:
+            $ref: '#/components/responses/404'
+          500:
+            $ref: '#/components/responses/500'  
+    /company/search/other/invested:
+      get:
+        summary: get company ids which are ever invested by the specified company id 
+        description: get company ids which are ever invested by the specified company id
+        tags: 
+          - relationship
+        parameters:
+          - in: path
+            name: companyId   # Note the name is the same as in the path
+            required: true
+            schema:
+              type: string
+              description: The company id
+        responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                schema: 
+                  properties: 
+                    code:
+                      type: integer
+                      description: http status code
+                      format: int32
+                      example: 200
+                    message:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/CompanyIdResponse'
+          400:
+            $ref: '#/components/responses/400'
+          404:
+            $ref: '#/components/responses/404'
+          500:
+            $ref: '#/components/responses/500'  
+    
+    /person/id:
+      get:
+        summary: get person document by person id 
+        description: get person document by person id
+        tags: 
+          - person
+        parameters:
+          - in: path
+            name: personId   # Note the name is the same as in the path
+            required: true
+            schema:
+              type: string
+              description: The person id
+        responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                schema: 
+                  properties: 
+                    code:
+                      type: integer
+                      description: http status code
+                      format: int32
+                      example: 200
+                    message:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Person'
+          400:
+            $ref: '#/components/responses/400'
+          404:
+            $ref: '#/components/responses/404'
+          500:
+            $ref: '#/components/responses/500'  
+    /person/permalink:
+      get:
+        summary: get person document by permalink
+        description: get person document by permalink
+        tags: 
+          - person
+        parameters:
+          - in: path
+            name: permalink   # Note the name is the same as in the path
+            required: true
+            schema:
+              type: string
+              description: The permalink of  a person
+        responses:
+          200:
+            description: OK
+            content:
+              application/json:
+                schema: 
+                  properties: 
+                    code:
+                      type: integer
+                      description: http status code
+                      format: int32
+                      example: 200
+                    message:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Person'
+          400:
+            $ref: '#/components/responses/400'
+          404:
+            $ref: '#/components/responses/404'
+          500:
+            $ref: '#/components/responses/500'  
+  
+components:
+  parameters:
+    lt-number:
+      in: query
+      name: lt
+      description: less than, could be specidied with <i>gt</i> as a within criteria
+      required: false
+      schema:
+        type: integer
+    gt-number:
+      in: query
+      name: gt
+      description: greater than, could be specidied with <i>lt</i> as a within criteria
+      required: false
+      schema:
+        type: integer
+    eq-number:
+      in: query
+      name: eq
+      description: exactly match, could not be specidied with <i>lt</i> or <i>gt</i>, obviously it will cause ambiguous
+      required: false
+      schema:
+        type: integer    
+    lt-date:
+      in: query
+      name: lt
+      description: less than, could be specidied with <i>gt</i> as a within criteria
+      required: false
+      schema:
+        type: string
+        format: date
+        example: '2017-01-01'
+    gt-date:
+      in: query
+      name: gt
+      description: greater than, could be specidied with <i>lt</i> as a within criteria
+      required: false
+      schema:
+        type: string
+        format: date
+        example: '2017-01-01'
+    eq-date:
+      in: query
+      name: eq
+      description: exactly match, could not be specidied with <i>lt</i> or <i>gt</i>, obviously it will cause ambiguous
+      required: false
+      schema:
+        type: string
+        format: date
+        example: '2017-01-01'
+  
+  
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema: 
+            $ref: '#/components/schemas/Error'
+    400:
+      description: Bad Request
+      content:
+        application/json:
+          schema: 
+            $ref: '#/components/schemas/Error'
+    404:
+      description: No Documents Found
+      content:
+        application/json:
+          schema: 
+            $ref: '#/components/schemas/Error'
+    
+    500:
+      description: Something wrong with the server.
+      content:
+        application/json:
+          schema: 
+            $ref: '#/components/schemas/Error'  
+  schemas:
+    Error:
+      properties:
+        code:
+          type: integer
+          description: http status code
+          format: int32
+        message:
+          type: string
+          description: error message 
+    CompanyIdResponse:
+      type: object
+      properties: 
+        code:
+          type: integer
+          description: http status code
+          format: int32
+          example: 200
+        message:
+          type: array
+          items:
+            type: string
+            example: "52cdef7c4bab8bd675297dc3"
+    CompanyResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        permalink:
+          type: string
+        crunchbase_url:
+          type: string
+        homepage_url:
+          type: string
+        category_code:
+          type: string
+        number_of_employees:
+          type: number
+        founded_date:
+          type: string
+          format: date
+        deadpooled_date:
+          type: string
+          format: date
+        tag_list:
+          type: string
+        email_address:
+          type: string
+        overview:
+          type: string
+        total_money_raised:
+          type: string
+        acquisition:
+          $ref: '#/components/schemas/Acquisition'
+        acquisitions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Acquisition'
+        relationships:
+          type: array
+          items:
+            $ref: '#/components/schemas/Relationship'
+        funding_rounds:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundingRound'
+        competitions:
+          type: array
+          items:
+            type: object
+            properties:
+              company_id:
+                type: string
+    Acquisition:
+      type: object
+      properties:
+        price_amount:
+          type: number
+        price_currency_code:
+          type: string
+        term_code:
+          type: string
+        source_url:
+          type: string
+        source_description:
+          type: string
+        acquired_date:
+          type: string
+          format: date
+        acquiring_company_id:
+          type: string
+    Relationship:
+      type: object
+      properties:
+        is_past:
+          type: boolean
+        title:
+          type: string
+        person_id:
+          type: string
+    FundingRound:
+      type: object
+      properties:
+        round_code:
+          type: string
+        source_url:
+          type: string
+        source_description:
+          type: string
+        raised_amount:
+          type: number
+        raised_currency_code:
+          type: string
+        funded_date:
+          type: string
+          format: date
+        investments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Investment'
+    Investment:
+      type: object
+      properties:
+        company_id:
+          type: string
+        financial_org:
+          $ref: '#/components/schemas/PermanentLink'
+        persion_id:
+          type: string
+    PermanentLink:
+      type: object
+      properties:
+        name:
+          type: string
+        permalink:
+          type: string
+    
+    Person:
+      type: object
+      properties:
+        last_name:
+          type: string
+        first_name:
+          type: string
+        permalink:
+          type: string
+    
+        

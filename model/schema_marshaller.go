@@ -13,8 +13,8 @@ type AliasBsonCompany BsonCompany
 type JSONBsonCompany struct {
 	AliasBsonCompany
 	Id             string `json:"id"`
-	FoundedDate    string `json:"foundedDate"`
-	DeadpooledDate string `json:"deadpooledDate"`
+	FoundedDate    string `json:"founded_date"`
+	DeadpooledDate string `json:"deadpooled_date"`
 }
 
 func ParseDateStr(str string) (*time.Time, error) {
@@ -82,7 +82,7 @@ func (this *BsonCompany) UnmarshalJSON(b []byte) error {
 type AliasBsonAcquisition BsonAcquisition
 type JSONAcquisition struct {
 	AliasBsonAcquisition
-	AcquiredDate string `json:"acquiredDate"`
+	AcquiredDate string `json:"acquired_date"`
 }
 
 func (this BsonAcquisition) MarshalJSON() ([]byte, error) {
@@ -121,7 +121,7 @@ func (this *BsonAcquisition) UnmarshalJSON(b []byte) error {
 type AliasBsonFundingRound BsonFundingRound
 type JSONFundingRound struct {
 	AliasBsonFundingRound
-	FundedDate string `json:"fundedDate"`
+	FundedDate string `json:"funded_date"`
 }
 
 func (this BsonFundingRound) MarshalJSON() ([]byte, error) {
