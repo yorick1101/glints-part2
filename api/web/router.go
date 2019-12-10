@@ -1,27 +1,13 @@
 package web
 
-/*
-GET /company/funding/rounds? lt, gt, eq
-GET /company/funding/amount? lt, gt, eq
-GET /company/funding/date? lt, gt, eq
-GET /company/deadpool/date? lt, gt, eq
-GET /company/person/invested/{personId}
-GET /company/person/employed/{personId}
-GET /company/other/acquisition/{companyId}
-GET /company/other/invested/{companyId}
-GET /company/{companyId}
-POST /company/{companyId}
-
-GET /person/permalink/{permalink}
-GET /person/{personId}
-*/
-
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func InitRouters() *gin.Engine {
 	router := gin.Default()
+	router.Use(cors.Default())
 	hadler := NewHandler()
 
 	router.GET("/company", hadler.getCompanyHandler)
