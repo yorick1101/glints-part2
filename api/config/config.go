@@ -18,20 +18,20 @@ type DBConfig struct {
 }
 
 func Init() {
-
-	user := "admin"
-	password := "admin"
-	host := "localhost"
-	portstr := "27017"
-	name := "glints"
 	/*
-
-		user := checkAndGet("ENV_DB_USER")
-		password := checkAndGet("ENV_DB_PASSWORD")
-		host := checkAndGet("ENV_DB_HOST")
-		portstr := checkAndGet("ENV_DB_PORT")
-		name := checkAndGet("ENV_DB_NAME")
+		user := "admin"
+		password := "admin"
+		host := "localhost"
+		portstr := "27017"
+		name := "glints"
 	*/
+
+	user := checkAndGet("ENV_DB_USER")
+	password := checkAndGet("ENV_DB_PASSWORD")
+	host := checkAndGet("ENV_DB_HOST")
+	portstr := checkAndGet("ENV_DB_PORT")
+	name := checkAndGet("ENV_DB_NAME")
+
 	port, err := strconv.Atoi(portstr)
 	if err != nil {
 		log.Panic("ENV_DB_PORT is not a number", err)

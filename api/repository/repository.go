@@ -261,6 +261,20 @@ func (repo *Repository) FindCompanyByIds(companyIds []string) ([]model.BsonCompa
 	return companies, nil
 }
 
+func (repo *Repository) DeteleCompanies(companyIds []string) (int64, error) {
+	companyCollection := repo.db.GetCollection(COMPANY_COLLECTION)
+	var ids []primitive.ObjectID
+	for _, companyId := range companyIds {
+		id, err := primitive.ObjectIDFromHex(companyId)
+		if err != nil {
+			return 0, err
+		}
+		ids = append(ids, id)
+	}
+	criteriaD := bson.D{{"_id", bson.D{{"$in", ids}}}}
+	return companyCollection.Delete(criteriaD)
+}
+
 func (repo *Repository) ReplaceCompany(company *model.BsonCompany) (int64, error) {
 	companyCollection := repo.db.GetCollection(COMPANY_COLLECTION)
 	return companyCollection.Replace(company.Id.Hex(), company)

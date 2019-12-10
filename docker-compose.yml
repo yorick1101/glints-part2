@@ -1,0 +1,34 @@
+version: '3.7'
+services:
+    api:
+        build:
+            context: "./api"
+            dockerfile: Dockerfile-api
+        depends_on:
+            - "mongo"
+        environment:
+            - ENV_DB_USER=admin
+            - ENV_DB_PASSWORD=admin
+            - ENV_DB_HOST=mongo
+            - ENV_DB_PORT=27017
+            - ENV_DB_NAME=glints
+        expose:
+            - "8080"
+    mongo:
+        image: mongo:4.2.1
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=admin
+            - MONGO_INITDB_ROOT_PASSWORD=admin
+        ports:
+            - "27017:27017"
+        volumes:
+            - mongo:/data/db
+    nginx:
+        build:
+            context: "./nginx"
+        ports:
+            - "80:80"
+        depends_on:
+            - "api"
+volumes:
+    mongo:

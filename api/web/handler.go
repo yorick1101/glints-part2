@@ -2,6 +2,7 @@ package web
 
 import (
 	"errors"
+	"fmt"
 	"glints-part2/model"
 	"glints-part2/repository"
 	"net/http"
@@ -65,6 +66,20 @@ func (handler *RequestHandler) updateCompanyHandler(c *gin.Context) {
 	} else {
 		response(c, http.StatusNotFound, "document not found")
 	}
+}
+
+func (handler *RequestHandler) deleteCompanyHandler(c *gin.Context) {
+	companyIds := c.QueryArray("id")
+	if len(companyIds) == 0 {
+		response(c, http.StatusBadRequest, "id cannot be empty")
+		return
+	}
+	count, err := handler.repo.DeteleCompanies(companyIds)
+	if err != nil {
+		response(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+	response(c, http.StatusOK, fmt.Sprintf("%d document deleted", count))
 }
 
 func checkIntFilter(c *gin.Context) (error, []model.IntFilter) {

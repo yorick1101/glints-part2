@@ -16,7 +16,7 @@ func (factory *RepositoryFactory) GetRepository() *Repository {
 
 func NewRepositoryFactory() *RepositoryFactory {
 	conf := config.GetDBConfig()
-	log.Info("Config:", conf.UserName, conf.Password, conf.Host, conf.Port, conf.Name)
+	log.Debug("Config:", conf.UserName, " ", conf.Password, " ", conf.Host, " ", conf.Port, " ", conf.Name)
 	db := newDBOP(conf.UserName, conf.Password, conf.Host, conf.Port, conf.Name)
 
 	return &RepositoryFactory{

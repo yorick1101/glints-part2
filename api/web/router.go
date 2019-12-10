@@ -26,6 +26,7 @@ func InitRouters() *gin.Engine {
 
 	router.GET("/company", hadler.getCompanyHandler)
 	router.POST("/company", hadler.updateCompanyHandler)
+	router.DELETE("/company", hadler.deleteCompanyHandler)
 
 	companyFunding := router.Group("/company/search/funding")
 	{

@@ -75,6 +75,7 @@ func (op *MongoCollectionOP) FindIdByAggregate(pipeline mongo.Pipeline) ([]strin
 func (op *MongoCollectionOP) Find(filter interface{}, results interface{}) error {
 	opts := options.Find()
 	cursor, err := op.collection.Find(context.TODO(), filter, opts)
+	log.Info("filter:", filter)
 	defer cursor.Close(context.TODO())
 	if err != nil {
 		return err
@@ -126,6 +127,15 @@ func (op *MongoCollectionOP) Replace(id string, update interface{}) (int64, erro
 	return res.MatchedCount, nil
 }
 
+func (op *MongoCollectionOP) Delete(filter interface{}) (int64, error) {
+	opts := options.Delete()
+	res, err := op.collection.DeleteMany(context.TODO(), filter, opts)
+	if err != nil {
+		return 0, err
+	}
+	return res.DeletedCount, nil
+}
+
 func newMongoDBOP(username string, password string, host string, port int, databaseName string) *MongoDBOP {
 	ctx, cancel := context.WithTimeout(context.TODO(), 10*time.Second)
 	defer cancel()
@@ -140,7 +150,7 @@ func newMongoDBOP(username string, password string, host string, port int, datab
 	}
 	log.Info("db connected")
 	database := client.Database(databaseName)
-	log.Info("db switch database", database.Name())
+	log.Info("db switch database ", database.Name())
 
 	return &MongoDBOP{
 		db: database,

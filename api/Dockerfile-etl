@@ -1,0 +1,12 @@
+FROM golang:1.13.5-alpine as builder
+
+RUN mkdir /build 
+ADD . /build/
+WORKDIR /build 
+
+RUN go build -o bin/etl.exe cmd/etl/main.go
+
+FROM alpine:3.10.3
+WORKDIR /app
+COPY --from=builder /build/bin/etl.exe /app/
+
