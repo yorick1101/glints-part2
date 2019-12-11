@@ -6,7 +6,6 @@ import (
 	"time"
 
 	log "github.com/sirupsen/logrus"
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -115,10 +114,8 @@ func (op *MongoCollectionOP) FindWithOptions(filter interface{}, results interfa
 	return nil
 }
 
-func (op *MongoCollectionOP) Replace(id string, update interface{}) (int64, error) {
-
+func (op *MongoCollectionOP) Replace(filter interface{}, update interface{}) (int64, error) {
 	opts := options.Replace().SetUpsert(false)
-	filter := bson.D{{"_id", id}}
 	res, err := op.collection.ReplaceOne(context.TODO(), filter, update, opts)
 	if err != nil {
 		return 0, err

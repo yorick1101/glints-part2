@@ -67,6 +67,7 @@ func (this *BsonCompany) UnmarshalJSON(b []byte) error {
 	}
 
 	company := BsonCompany(jcompany.AliasBsonCompany)
+
 	company.FoundedDate = fundedDate
 	company.DeadpooledDate = deadpooledDate
 	id, err := primitive.ObjectIDFromHex(jcompany.Id)
@@ -74,8 +75,7 @@ func (this *BsonCompany) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	company.Id = id
-
-	this = &company
+	*this = company
 	return nil
 }
 
@@ -114,7 +114,7 @@ func (this *BsonAcquisition) UnmarshalJSON(b []byte) error {
 	acquisition := BsonAcquisition(jacquisition.AliasBsonAcquisition)
 	acquisition.AcquiredDate = acquiredDate
 
-	this = &acquisition
+	*this = acquisition
 	return nil
 }
 
@@ -153,6 +153,6 @@ func (this *BsonFundingRound) UnmarshalJSON(b []byte) error {
 	fundingRound := BsonFundingRound(jfundingRound.AliasBsonFundingRound)
 	fundingRound.FundedDate = fundedDate
 
-	this = &fundingRound
+	*this = fundingRound
 	return nil
 }

@@ -17,7 +17,7 @@ type CollectionOP interface {
 	Find(filter interface{}, results interface{}) error
 	FindOne(filter interface{}, results interface{}) error
 	FindWithOptions(filter interface{}, results interface{}, options *options.FindOptions) error
-	Replace(id string, update interface{}) (int64, error)
+	Replace(filter interface{}, update interface{}) (int64, error)
 	Delete(filter interface{}) (int64, error)
 }
 

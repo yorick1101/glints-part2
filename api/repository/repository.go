@@ -277,7 +277,8 @@ func (repo *Repository) DeteleCompanies(companyIds []string) (int64, error) {
 
 func (repo *Repository) ReplaceCompany(company *model.BsonCompany) (int64, error) {
 	companyCollection := repo.db.GetCollection(COMPANY_COLLECTION)
-	return companyCollection.Replace(company.Id.Hex(), company)
+	filter := bson.D{{"_id", company.Id}}
+	return companyCollection.Replace(filter, company)
 }
 
 func (repo *Repository) FindPersonById(personId string) (*model.BsonPerson, error) {
