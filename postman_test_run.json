@@ -1,0 +1,662 @@
+{
+	"id": "79eeafb3-e17c-4f0b-9143-fcaf8edb9d8c",
+	"name": "API for Glints-Part2",
+	"allTests": [],
+	"timestamp": "2019-12-11T13:35:10.082Z",
+	"collection_id": "1ad25e0b-0eca-48a5-8a92-7907782dd4d8",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "0",
+	"data": [],
+	"delay": 0,
+	"count": 10,
+	"collection": {
+		"id": "1ad25e0b-0eca-48a5-8a92-7907782dd4d8",
+		"name": "API for Glints-Part2",
+		"order": [],
+		"folders_order": [
+			"c8aa0034-2ffd-40ce-842c-d8d9916ab4de",
+			"e925eca9-3b28-4ad4-81f8-0c1946371545"
+		],
+		"isFavorite": false
+	},
+	"folder": null,
+	"environment": null,
+	"globals": null,
+	"results": [
+		{
+			"name": "get company ids filtered by funding rounds",
+			"id": "d8f96c97-e5a2-4924-8a06-ddc477e05bd5",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"203",
+				"156",
+				"138",
+				"109",
+				"131",
+				"131",
+				"131",
+				"141",
+				"140",
+				"135"
+			],
+			"allTests": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			],
+			"time": "135",
+			"totalRequestTime": 1415,
+			"iterationResults": {}
+		},
+		{
+			"name": "get company ids filtered by raising amount",
+			"id": "915e542a-eae7-4404-ae02-bc05a7611631",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"73",
+				"59",
+				"66",
+				"62",
+				"60",
+				"64",
+				"165",
+				"68",
+				"64",
+				"75"
+			],
+			"allTests": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			],
+			"time": "75",
+			"totalRequestTime": 756,
+			"iterationResults": {}
+		},
+		{
+			"name": "get company ids filtered by funding date",
+			"id": "90564381-59ab-4fa0-bed0-c0235bbaa201",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"30",
+				"29",
+				"31",
+				"26",
+				"29",
+				"36",
+				"32",
+				"32",
+				"34",
+				"28"
+			],
+			"allTests": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			],
+			"time": "28",
+			"totalRequestTime": 307,
+			"iterationResults": {}
+		},
+		{
+			"name": "get company ids which is invested by the specified person id",
+			"id": "7a7c4d54-2a5c-4df4-93be-709d2a7d39d3",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"50",
+				"48",
+				"61",
+				"44",
+				"49",
+				"58",
+				"54",
+				"53",
+				"60",
+				"62"
+			],
+			"allTests": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			],
+			"time": "62",
+			"totalRequestTime": 539,
+			"iterationResults": {}
+		},
+		{
+			"name": "get company ids which the specified person id ever employed by",
+			"id": "d5e6a840-4f9b-4a3c-ac65-0771b089efb5",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"59",
+				"57",
+				"64",
+				"50",
+				"56",
+				"78",
+				"55",
+				"65",
+				"66",
+				"62"
+			],
+			"allTests": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			],
+			"time": "62",
+			"totalRequestTime": 612,
+			"iterationResults": {}
+		},
+		{
+			"name": "get company ids which are ever acquired by the specified company id",
+			"id": "538a842f-ade2-4eb1-b6a0-1efdce7f54ef",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"51",
+				"52",
+				"59",
+				"49",
+				"56",
+				"56",
+				"49",
+				"52",
+				"58",
+				"54"
+			],
+			"allTests": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			],
+			"time": "54",
+			"totalRequestTime": 536,
+			"iterationResults": {}
+		},
+		{
+			"name": "get company ids which are ever invested by the specified company id",
+			"id": "52ce8c25-7179-4429-b59a-e1af8cbd7aa8",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"49",
+				"50",
+				"44",
+				"46",
+				"47",
+				"55",
+				"51",
+				"48",
+				"49",
+				"48"
+			],
+			"allTests": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			],
+			"time": "48",
+			"totalRequestTime": 487,
+			"iterationResults": {}
+		},
+		{
+			"name": "get company ids filtered by deadpooled date",
+			"id": "94bd7b77-c0ed-4d56-9be9-d9a92209d193",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"32",
+				"30",
+				"25",
+				"28",
+				"26",
+				"37",
+				"32",
+				"35",
+				"30",
+				"30"
+			],
+			"allTests": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			],
+			"time": "30",
+			"totalRequestTime": 305,
+			"iterationResults": {}
+		},
+		{
+			"name": "get company documents",
+			"id": "83017120-fa0d-4db9-837d-fd4337f72f13",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"15",
+				"12",
+				"9",
+				"9",
+				"10",
+				"11",
+				"13",
+				"8",
+				"10",
+				"9"
+			],
+			"allTests": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			],
+			"time": "9",
+			"totalRequestTime": 106,
+			"iterationResults": {}
+		},
+		{
+			"name": "get person document by person id",
+			"id": "9728648e-4922-42c4-97da-444d24c1b693",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"13",
+				"8",
+				"5",
+				"6",
+				"5",
+				"6",
+				"5",
+				"5",
+				"6",
+				"6"
+			],
+			"allTests": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			],
+			"time": "6",
+			"totalRequestTime": 65,
+			"iterationResults": {}
+		},
+		{
+			"name": "get person document by permalink",
+			"id": "2e2843d0-ccb2-4bd0-a25d-8b4496bad3ed",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				"65",
+				"52",
+				"41",
+				"53",
+				"50",
+				"69",
+				"55",
+				"52",
+				"57",
+				"51"
+			],
+			"allTests": [
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{},
+				{}
+			],
+			"time": "51",
+			"totalRequestTime": 545,
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 0,
+	"totalFail": 0,
+	"totalTime": 5673,
+	"lifecycle": "done",
+	"requests": [
+		{
+			"name": "get company ids filtered by funding rounds",
+			"id": "d8f96c97-e5a2-4924-8a06-ddc477e05bd5",
+			"url": "http://localhost/api/company/search/funding/rounds?lt=5&gt=1",
+			"time": "135",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "get company ids filtered by raising amount",
+			"id": "915e542a-eae7-4404-ae02-bc05a7611631",
+			"url": "http://localhost/api/company/search/funding/amount?gt=120000000",
+			"time": "75",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "get company ids filtered by funding date",
+			"id": "90564381-59ab-4fa0-bed0-c0235bbaa201",
+			"url": "http://localhost/api/company/search/funding/date?lt=1999-01-01",
+			"time": "28",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "get company ids which is invested by the specified person id",
+			"id": "7a7c4d54-2a5c-4df4-93be-709d2a7d39d3",
+			"url": "http://localhost/api/company/search/person/invested/5df04fd9087c56d3258c0119",
+			"time": "62",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "get company ids which the specified person id ever employed by",
+			"id": "d5e6a840-4f9b-4a3c-ac65-0771b089efb5",
+			"url": "http://localhost/api/company/search/person/employed/<string>",
+			"time": "62",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "get company ids which are ever acquired by the specified company id",
+			"id": "538a842f-ade2-4eb1-b6a0-1efdce7f54ef",
+			"url": "http://localhost/api/company/search/other/acquisition/52cdef7c4bab8bd675298189",
+			"time": "54",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "get company ids which are ever invested by the specified company id",
+			"id": "52ce8c25-7179-4429-b59a-e1af8cbd7aa8",
+			"url": "http://localhost/api/company/search/other/invested/<string>",
+			"time": "48",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "get company ids filtered by deadpooled date",
+			"id": "94bd7b77-c0ed-4d56-9be9-d9a92209d193",
+			"url": "http://localhost/api/company/search/deadpool/date?lt=1999-01-01",
+			"time": "30",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "get company documents",
+			"id": "83017120-fa0d-4db9-837d-fd4337f72f13",
+			"url": "http://localhost/api/company?id=52cdef7c4bab8bd675298189",
+			"time": "9",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "get person document by person id",
+			"id": "9728648e-4922-42c4-97da-444d24c1b693",
+			"url": "http://localhost/api/person/id/5df04fd9087c56d3258c42f3",
+			"time": "6",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "get person document by permalink",
+			"id": "2e2843d0-ccb2-4bd0-a25d-8b4496bad3ed",
+			"url": "http://localhost/api/person/permalink/peter-oppenheimer",
+			"time": "51",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		}
+	],
+	"synced": false
+}
