@@ -79,4 +79,8 @@ chmod +x import.sh
     - The document can be viewed on http://127.0.0.1:8080/
     - Use "Try it out" button to send request to local api server.
 
+### Performance Test
+- Please check file <i>postman_test_run.json</i> the exported report from postman 
+- API /company/search/funding/rounds and /company/search/funding/amount are slower than others which shows the aggregation takes more time than filtering
+- To improve that, a thought is to create a field which stores the sum or count value. The value is updated every time an update is made to the document. Also create an index on the field can improve the performance  
 
