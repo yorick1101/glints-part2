@@ -30,6 +30,7 @@
 ginx_1  | 172.19.0.1 - - [10/Dec/2019:11:02:18 +0000] "GET /api/company?id=52cdef7c4bab8bd675297d8a HTTP/1.1" 200 5175 "http://localhost:8080/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36" 0.037 0.030
 ```
 ### Import Data to Database
+- The API server must be started so that database is alive
 - Goto the glints-part2/scripts
 - Make the script executable
 ```
@@ -37,7 +38,7 @@ chmod +x build-etl.sh
 chmod +x import.sh
 ```
 #### Build
-- Build by executing the script build-etl.sh
+- Build by executing the script build-etl.sh, an image glints-part2-etl:latest should be built
 ```
 ./build-etl.sh
 ```
@@ -50,7 +51,14 @@ chmod +x import.sh
 ```
 ./import.sh $(pwd)/companies.json
 ```
-- I leave the port 27017 exposed to host, so that it is reacheable by mongo client on the host
+- Log if succeed, one database and two collections should be created
+    ```
+    time="2019-12-11T02:09:27Z" level=info msg="db connected"
+    time="2019-12-11T02:09:27Z" level=info msg="db switch database glints"
+    time="2019-12-11T02:09:27Z" level=info msg=/app/companies.json
+    time="2019-12-11T02:09:30Z" level=info msg="inserted company:18801"
+    ```
+- Port 27017 is exposed to host, so that it is reacheable by mongo client on the host
 
 ### API Document
 - API document is written in openapi 3 format.
@@ -69,5 +77,6 @@ chmod +x import.sh
     http-server -cors
     ```
     - The document can be viewed on http://127.0.0.1:8080/
+    - Use "Try it out" button to send request to local api server.
 
 
