@@ -216,7 +216,7 @@ paths:
           $ref: '#/components/responses/400'
         '500':
           $ref: '#/components/responses/500'
-  /company/search/person/invested:
+  /company/search/person/invested/{personId}:
     get:
       summary: get company ids which is invested by the specified person id
       description: get company ids which is invested by the specified person id
@@ -251,7 +251,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-  /company/search/person/employed:
+  /company/search/person/employed/{personId}:
     get:
       summary: get company ids which the specified person id ever employed by
       description: get company ids which the specified person id ever employed by
@@ -286,7 +286,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-  /company/search/other/acquisition:
+  /company/search/other/acquisition/{companyId}:
     get:
       summary: get company ids which are ever acquired by the specified company id
       description: get company ids which are ever acquired by the specified company id
@@ -321,7 +321,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-  /company/search/other/invested:
+  /company/search/other/invested/{companyId}:
     get:
       summary: get company ids which are ever invested by the specified company id
       description: get company ids which are ever invested by the specified company id
@@ -356,7 +356,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-  /person/id:
+  /person/id/{personId}:
     get:
       summary: get person document by person id
       description: get person document by person id
@@ -391,7 +391,7 @@ paths:
           $ref: '#/components/responses/404'
         '500':
           $ref: '#/components/responses/500'
-  /person/permalink:
+  /person/permalink/{permalink}:
     get:
       summary: get person document by permalink
       description: get person document by permalink
